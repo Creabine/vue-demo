@@ -8,15 +8,31 @@ import Vuex from 'vuex'
 import mutations from './mutations'
 import actions from './actions'
 
-//假数据
-import data from '../../static/data.json'
+//json数据
+import formData from '../../static/data.json'
+import listModel from '../../static/list_model.json'
+import listData1 from '../../static/list_data1.json'
+import listData2 from '../../static/list_data2.json'
 
 Vue.use(Vuex);
 
+
 const state = {
-	data: data.data.data,
-	model: data.data.model,
-	status: data.status,
+	formData : {
+		data: formData.data.data,
+		model: formData.data.model,
+		status: formData.status,
+	},
+	listData : {
+		list1 : {
+			model: listModel.facets[0],
+			data: listData1.data.data
+		},
+		list2 : {
+			model: listModel.facets[1],
+			data: listData2.data.data
+		},
+	}
 }
 
 //默认导出： 初始化好的Vuex.Store()对象
@@ -24,4 +40,5 @@ export default new Vuex.Store({
 	state,
 	mutations,
 	actions
+	//这里可以有getter
 })

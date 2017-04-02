@@ -31,14 +31,14 @@ export default {
 		//console.log(obj);
 		if (obj.type == 'stat') {
 			//console.log(state.data[obj.code]);
-			state.data[obj.code] = obj.status;
+			state.formData.data[obj.code] = obj.status;
 			//console.log(state.data[obj.code]);
 			return;
 		}
-		state.data[obj.code] = obj.value;
+		state.formData.data[obj.code] = obj.value;
 	},
 	[types.RENDER](state,data){
 		//在这里修改store中的状态
-		state.renderArray = data;
+		//state.renderArray = data;
 	},
 }

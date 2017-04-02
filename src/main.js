@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-default/index.css'
 import store from './store'
 //组件
 import Home from './components/Home'
+import Form from './components/Form'
 import List from './components/List'
 //关闭生产模式下给出的提示
 Vue.config.productionTip = false
@@ -19,8 +20,8 @@ const routes = [{
 	path : '/',
 	component : Home
 },{
-	path : '/home',
-      component : Home
+      path : '/form',
+      component : Form
 },{
       path : '/list',
       component : List

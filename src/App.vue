@@ -5,6 +5,7 @@
 			<el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
 			<el-breadcrumb-item :to="{ path: '/form' }">Form</el-breadcrumb-item>
 			<el-breadcrumb-item :to="{ path: '/list' }">List</el-breadcrumb-item>
+			<el-breadcrumb-item :to="{ path: '/test' }">Test</el-breadcrumb-item>
 		</el-breadcrumb>
 
 		<router-view></router-view>
@@ -17,13 +18,11 @@
 	export default {
 		data() {
 			return {
-				activeName: 'second'
+				
 			};
 		},
 		methods: {
-			handleClick(tab, event) {
-				console.log(tab, event);
-			}
+			
 		}
 	};
 </script>

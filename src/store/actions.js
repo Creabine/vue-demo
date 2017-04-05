@@ -32,8 +32,5 @@ import * as types from './mutation-types'
 export default {
 	submit({ commit },data) {
 		commit(types.SUBMIT,data)
-	},
-	render({ commit },data) {
-		commit(types.RENDER,data)
-	},
+	}
 }

@@ -23,22 +23,7 @@ import * as types from './mutation-types'
 // }
 export default {
 	[types.SUBMIT](state,obj){
-		//在这里修改store中的状态
-		//state.data.data = data;
-		//console.log(obj);
-		//console.log(state.data[obj.code]);
-		//console.log(obj.value);
-		//console.log(obj);
-		if (obj.type == 'stat') {
-			//console.log(state.data[obj.code]);
-			state.formData.data[obj.code] = obj.status;
-			//console.log(state.data[obj.code]);
-			return;
-		}
-		state.formData.data[obj.code] = obj.value;
-	},
-	[types.RENDER](state,data){
-		//在这里修改store中的状态
-		//state.renderArray = data;
-	},
+		console.log(obj);
+		state.formData.data = obj;
+	}
 }

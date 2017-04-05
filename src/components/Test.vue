@@ -8,9 +8,10 @@
 		<el-dialog title="数据编辑表单" v-model="dialogFormVisible"  size="small">
 			<el-form :model="testFrom" :rules="rules" ref="testFrom" :inline="true" label-width="120px">
 
-			<el-form-item :label="testFrom.so_money.name" prop="so_money.value">
-				<el-input v-model="testFrom.so_money.value" ></el-input>
-			</el-form-item>
+				<el-form-item v-for="item in testFormModel" :label="item.name" :key="item.code" :prop="item.code">
+					<el-input v-model="testFrom[item.code]"></el-input>
+					
+				</el-form-item>
 				<!-- 提交按钮 -->
 				<el-form-item>
 					<el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -25,7 +26,7 @@
 
 <script>
 
-import {mapGetters} from 'vuex'
+	import {mapGetters} from 'vuex'
 
 	export default {
 		data(){
@@ -33,17 +34,21 @@ import {mapGetters} from 'vuex'
 				//dialogTableVisible: false,
 				dialogFormVisible: false,
 				testFrom:{
-					so_money:{
-						name: '价格',
-						value: 123
-					}
+					price: "123",
+					buyer:'陈磊'
 				},
-				rules:{
-					so_money:{
-						message:"提示信息",
-						required:true,
-						trigger:"blur"
+				testFormModel:[
+					{
+						name: '价格',
+						code: 'price'
+					},{
+						name: '买家',
+						code:'buyer'
 					}
+				],
+				rules:{
+					price:{ required:true,message:"请输入价格",trigger:"blur" },
+					buyer:{ required:true,message:"请输入买家",trigger:"blur"}
 				}
 			}
 		},
@@ -51,29 +56,27 @@ import {mapGetters} from 'vuex'
 			
 		},
 		methods : {
-		  getList() {
-		  	  /* 从json文件取得数据放入vuex  */
-			  	this.dialogFormVisible = true;
-		 	},
-		 	submitForm(formName) {
-		 		//console.log(this.$refs[formName].validate);
-        this.$refs[formName].validate((valid) => {
-        	//alert('jinlaile');
-          if (valid) {
-            alert('submit!');
-            this.dialogFormVisible = false;
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
+			getList() {
+				/* 从json文件取得数据放入vuex  */
+				this.dialogFormVisible = true;
+			},
+			submitForm(formName) {
+		 		this.$refs[formName].validate((valid) => {
+		        	if (valid) {
+		        		//alert('submit!');
+		        		this.dialogFormVisible = false;
+		        	} else {
+		        		console.log('error submit!!');
+		        		return false;
+		        	}
+		        });
+			},
 		},
 	}
-</script>
+	</script>
 
-<style>
-	.data{margin-top: 15px;background-color: green;}
-	.model{margin-top: 15px;background-color: yellow;}
-	p{margin: 20px 0;}
-</style>
+	<style>
+		.data{margin-top: 15px;background-color: green;}
+		.model{margin-top: 15px;background-color: yellow;}
+		p{margin: 20px 0;}
+	</style>

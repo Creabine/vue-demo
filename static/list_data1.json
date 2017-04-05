@@ -3,7 +3,7 @@
     "data": [
       {
         "prop_memo": "",
-        "sync_switch": 0,
+        "sync_switch": 1,
         "account_crt_id_name": "gaoqr",
         "code": "Z001",
         "memo": "Z001",
@@ -19,7 +19,7 @@
         "avatar": "",
         "volume": 0.00,
         "is_combo": 0,
-        "is_gift": 0,
+        "is_gift": 1,
         "sales_name": "佛珠216天然合成清宫红玛瑙5.5mm正圆收藏级红T1203天1",
         "crt_ts": 1470157994000,
         "has_sku": 3,

@@ -37,114 +37,70 @@ const state = {
 }
 
 
-
-
-
-
-
-
 const getters = {
-  /* formData Getters */
-  fromRender : state => {
-  	let data = {
-  		//renderList:[]
-  		renderOrder:[]
-  	};
-  	for (var i = state.formData.model.main.fields.length - 1; i >= 0; i--) {
-  		let obj = state.formData.model.main.fields[i];
-  		obj.value = state.formData.data[state.formData.model.main.fields[i].code];
-  		//cardpos == 0 的数据应该是不显示的,就不放入数组了。
-  		if (obj.cardpos != 0) {
-  			//下拉框处理
-  			if (obj.type == 'stat') {
-		 			obj.rangeset = state.formData.model.main.fields[i].rangeset.split('@');
-  			}
-  			data[obj.code] = obj;
-  			let orderObj = {
-  				code:obj.code,
-  				cardpos:obj.cardpos
-  			}
-  			data.renderOrder.push(orderObj);
-  			//data.renderList.push(obj);
-  		}
-  	}
-  	//data.renderList.sort(compare("cardpos"));
-  	data.renderOrder.sort(compare("cardpos"));
-  	return data
-  },
-  rules : state => {
-  	let rules = {};
-  	for (var i = state.formData.model.main.fields.length - 1; i >= 0; i--) {
-  		//cardpos == 0 的数据应该是不显示,也就没有校验规则。
-  		if (state.formData.model.main.fields[i].cardpos != 0) {
-  			rules[state.formData.model.main.fields[i].code] = {
-	  			required : state.formData.model.main.fields[i].required,
-	  			message : state.formData.model.main.fields[i].tip,
-	  			trigger: 'blur'
-	  		}
-  		}
-  	}
-  	return rules
-  },
-	/* listData Getters */
-	list1_Render : state => {
-		let list = [];
-		for (var i = state.listData.list1.data.length - 1; i >= 0; i--) {
-			let dataObj = {}
-			//let dataValueList = []
-			for(let key in state.listData.list1.data[i]){
-				for (var j = state.listData.list1.model.model.main.fields.length - 1; j >= 0; j--) {
-					const code = state.listData.list1.model.model.main.fields[j].code;
-					if (key == code) {
-						let keyObj = {
-              value: state.listData.list1.data[i][key],
-              ...state.listData.list1.model.model.main.fields[j]
-						};
-						if (code == 'sync_switch') {  //element-ui 这里不是布尔值会报错
-							keyObj.value = Boolean(keyObj.value);
-						}
-						dataObj[key] = keyObj;
-						//dataValueList.push(keyObj);
-						break;
-					}
-				}
+	/* formData Getters */
+	formModel : state => {
+		let array = state.formData.model.main.fields.filter(function(obj){
+	  		return obj.cardpos > 0
+	  	});
+		array.map(function(obj){
+			if (obj.type == 'stat') {
+				obj.rangeset = obj.rangeset.split('@');
 			}
-			//dataValueList.sort(compare("listpos"));
-			//list.push(dataValueList);
-      list.push(dataObj);
-		}
-		list.sort(compare("listpos"));
-		return list
+		});
+	  	array.sort(compare("cardpos"));
+		return array
 	},
-	list2_Render : state => {
-		let list = [];
-		for (var i = state.listData.list2.data.length - 1; i >= 0; i--) {
-			let dataObj = {}
-			//let dataValueList = []
-			for(let key in state.listData.list2.data[i]){
-				for (var j = state.listData.list2.model.model.main.fields.length - 1; j >= 0; j--) {
-					const code = state.listData.list2.model.model.main.fields[j].code;
-					if (key == code) {
-						let keyObj = {
-              value: state.listData.list2.data[i][key],
-              ...state.listData.list2.model.model.main.fields[j]
-						};
-						if (code == 'sync_switch') {  //element-ui 这里不是布尔值会报错
-							keyObj.value = Boolean(keyObj.value);
-						}
-						dataObj[key] = keyObj;
-						//dataValueList.push(keyObj);
-						break;
-					}
-				}
-			}
-			//dataValueList.sort(compare("listpos"));
-			//list.push(dataValueList);
-      list.push(dataObj);
+      rules : state => {
+	  	let rules = {};
+	  	//cardpos == 0 的数据应该是不显示,也就没有校验规则。
+	  	let array = state.formData.model.main.fields.filter(function(obj){
+	  		return obj.cardpos > 0
+	  	});
+	  	for (var i = state.formData.model.main.fields.length - 1; i >= 0; i--) {
+  			rules[state.formData.model.main.fields[i].code] = [{
+  				required : state.formData.model.main.fields[i].required,
+  				message : state.formData.model.main.fields[i].tip
+  			}];
+  			//不同数据的特定校验规则
+  			if (state.formData.model.main.fields[i].code == 'crt_ts') {
+  				let numberRules = { type: 'number', message: '必须为数字值'};
+  				rules[state.formData.model.main.fields[i].code].push(numberRules);
+  			}
 		}
-		list.sort(compare("listpos"));
-		return list
+	  	return rules
+	 },
+	
+      /* listData Getters */
+      list1Model : state => {
+	  	let array = state.listData.list1.model.model.main.fields.filter(function(obj){
+	  		return obj.listpos > 0
+	  	});
+	  	array.sort(compare("listpos"));
+		return array
 	},
+	 list2Model : state => {
+	  	let array = state.listData.list2.model.model.main.fields.filter(function(obj){
+	  		return obj.listpos > 0
+	  	});
+	  	array.sort(compare("listpos"));
+		return array
+	},
+	//为了switch不报错，把 1/0 改为 true/false
+	list1Data : state => {
+	  	let data = state.listData.list1.data;
+	  	data.map(function(obj){
+			obj.sync_switch = Boolean(obj.sync_switch);
+		});
+		return data
+	},
+	list2Data : state => {
+	  	let data = state.listData.list2.data;
+	  	data.map(function(obj){
+			obj.sync_switch = Boolean(obj.sync_switch);
+		});
+		return data
+	}
 }
 
 //默认导出： 初始化好的Vuex.Store()对象

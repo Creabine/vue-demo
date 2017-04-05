@@ -12,4 +12,3 @@
 
 //提交
 export const SUBMIT = 'SUBMIT'
-export const RENDER = 'RENDER'

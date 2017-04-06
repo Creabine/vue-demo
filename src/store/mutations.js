@@ -23,7 +23,11 @@ import * as types from './mutation-types'
 // }
 export default {
 	[types.SUBMIT](state,obj){
-		console.log(obj);
+		//console.log(obj);
 		state.formData.data = obj;
+	},
+	[types.ADD_LIST_DATA](state,obj){
+		//console.log(obj);
+		state.list[obj.code + '_data'] = obj
 	}
 }

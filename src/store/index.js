@@ -11,8 +11,6 @@ import actions from './actions'
 //json数据
 import formData from '../../static/data.json'
 import listModel from '../../static/list_model.json'
-import listData1 from '../../static/list_data1.json'
-import listData2 from '../../static/list_data2.json'
 
 Vue.use(Vuex);
 
@@ -24,15 +22,8 @@ const state = {
 		model: formData.data.model,
 		status: formData.status,
 	},
-	listData : {
-		list1 : {
-			model: listModel.facets[0],
-			data: listData1.data.data
-		},
-		list2 : {
-			model: listModel.facets[1],
-			data: listData2.data.data
-		},
+	list : {
+		listModel:listModel
 	}
 }
 
@@ -71,36 +62,8 @@ const getters = {
 	  	return rules
 	 },
 	
-      /* listData Getters */
-      list1Model : state => {
-	  	let array = state.listData.list1.model.model.main.fields.filter(function(obj){
-	  		return obj.listpos > 0
-	  	});
-	  	array.sort(compare("listpos"));
-		return array
-	},
-	 list2Model : state => {
-	  	let array = state.listData.list2.model.model.main.fields.filter(function(obj){
-	  		return obj.listpos > 0
-	  	});
-	  	array.sort(compare("listpos"));
-		return array
-	},
-	//为了switch不报错，把 1/0 改为 true/false
-	list1Data : state => {
-	  	let data = state.listData.list1.data;
-	  	data.map(function(obj){
-			obj.sync_switch = Boolean(obj.sync_switch);
-		});
-		return data
-	},
-	list2Data : state => {
-	  	let data = state.listData.list2.data;
-	  	data.map(function(obj){
-			obj.sync_switch = Boolean(obj.sync_switch);
-		});
-		return data
-	}
+	/* list Getters */
+	
 }
 
 //默认导出： 初始化好的Vuex.Store()对象

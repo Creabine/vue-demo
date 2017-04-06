@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import store from './store'
@@ -15,6 +16,7 @@ import Test from './components/Test'
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
+Vue.use(VueResource)
 Vue.use(ElementUI)
 
 const routes = [{

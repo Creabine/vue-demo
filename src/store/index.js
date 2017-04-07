@@ -20,7 +20,7 @@ const state = {
 	formData : {
 		data: formData.data.data,
 		model: formData.data.model,
-		status: formData.status,
+		//status: formData.status,
 	},
 	list : {
 		listModel:listModel
@@ -61,6 +61,15 @@ const getters = {
 		}
 	  	return rules
 	 },
+	 slaves : state => {
+	 	let array =  state.formData.model.slaves;
+	 	array.map(function(obj){
+			obj.fields = obj.fields.filter(function(obj){
+				return obj.listpos > 0
+			});
+		});
+		return array;
+	 }
 	
 	/* list Getters */
 	

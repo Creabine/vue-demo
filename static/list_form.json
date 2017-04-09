@@ -1,0 +1,38 @@
+{
+  "data": {
+    "data": [
+      {
+        "prop_memo": "",
+        "sync_switch": 1,
+        "account_crt_id_name": "gaoqr",
+        "code": "Z001",
+        "memo": "Z001",
+        "rid": 1,
+        "price": 0.00,
+        "lm_ts": 1470157994000,
+        "id": "ruyizang:Z001",
+        "tenantry_id": "ruyizang",
+        "brand": "",
+        "weight": 50.00,
+        "account_crt_id": "ruyizang:15201218752",
+        "cate_id": "",
+        "avatar": "",
+        "volume": 0.00,
+        "is_combo": 0,
+        "is_gift": 1,
+        "sales_name": "佛珠216天然合成清宫红玛瑙5.5mm正圆收藏级红T1203天1",
+        "crt_ts": 1470157994000,
+        "has_sku": 3,
+        "bar_code": "",
+        "name": "佛珠216天然合成清宫红玛瑙5.5mm正圆收藏级红T1203天1",
+        "category": "",
+        "status": 5
+      }
+    ],
+    "pageNo": 1,
+    "pageSize": 10,
+    "totalCount": 5550,
+    "totalPageCount": 555
+  },
+  "status": 1
+}

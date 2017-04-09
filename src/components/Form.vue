@@ -7,18 +7,20 @@
 		<el-dialog title="数据编辑表单" v-model="dialogFormVisible"  size="large">
 			<el-row>
 				<el-form :model="formData" :rules="rules" ref="formData" label-position="top" label-width="120px">
-					<el-col :span="9" :offset="2" v-for="(item,index) in formModel" :key="item.code">
-
-						<el-form-item v-if="item.type == 'stat'" :label="item.name" :prop="item.code">
-							<el-radio-group v-model="formData[item.code]">
-								<el-radio v-for="option in item.rangeset" :key="option" :label="parseInt(option.split(':')[0])">{{option.split(':')[1]}}</el-radio>
-							</el-radio-group>
-						</el-form-item>
-
-						<el-form-item v-else :label="item.name" :prop="item.code">
-							<el-input v-model.number="formData[item.code]" :disabled="item.editable"></el-input>
-						</el-form-item>
-
+					<!-- top -->
+					<el-col :span="9" :offset="2" v-for="item in formModel.fields" v-if="item.fieldset == 'top'" :key="item.code">
+						<form-item :field="item" :formData="formData"></form-item>
+					</el-col>
+					<!-- fieldset -->
+					<fieldset v-for="fieldsetitem in formModel.fieldset">
+						<legend>{{fieldsetitem.name}}</legend>
+						<el-col :span="9" :offset="2" v-for="item in formModel.fields" v-if="item.fieldset == fieldsetitem.code" :key="item.code">
+							<form-item :field="item" :formData="formData"></form-item>
+						</el-col>
+					</fieldset>
+					<!-- bottom -->
+					<el-col :span="9" :offset="2" v-for="item in formModel.fields" v-if="item.fieldset == 'bottom'" :key="item.code">
+						<form-item :field="item" :formData="formData"></form-item>
 					</el-col>
 				</el-form>
 			</el-row>
@@ -39,7 +41,7 @@
 			</template>
 
 			<!-- 提交按钮 -->
-			<el-row type="flex" justify="center" class="btnFixed">
+			<el-row type="flex" justify="center">
 					<el-button @click="dialogFormVisible = false">取 消</el-button>
 					<el-button type="primary" @click="submitForm('formData')">提 交</el-button>
 			</el-row>
@@ -52,6 +54,7 @@
 <script>
 import {mapState} from 'vuex'
 import {mapGetters} from 'vuex'
+import FormItem from './Form-item.vue'
 
 export default {
 	data(){
@@ -59,6 +62,9 @@ export default {
 			dialogFormVisible: false,
 		}
 	},
+	components: { 
+    	'form-item': FormItem,
+    },
 	computed : {
 		...mapState({
 			formData: state => state.formData.data
@@ -92,4 +98,5 @@ export default {
 	.data{margin-top: 15px;background-color: green;}
 	.model{margin-top: 15px;background-color: yellow;}
 	p{margin: 20px 0;}
+	.btnFixed{position: fixed !important; z-index:9999;bottom: 20px;left:300px;}
 </style>

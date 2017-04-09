@@ -20,27 +20,16 @@
 
 		<!-- 下边的table组件化。然后根据facets[i].type 来判断渲染类型，若没有type就用facets的默认type。 -->
 		<!-- 然后根据不同的type来返回不同的子组件，来进行渲染。复制一个facet，渲染出一个 form-->
-		<el-table v-show="displayModel.length != 0" :data="displayList" border stripe style="width:100%;">
-			<el-table-column type="selection" width="50"></el-table-column>
 
-			<template v-for="item in displayModel" >
-				<el-table-column v-if="item.code == 'is_gift'" :prop="item.code" :label="item.name" width="60">
-					<template scope="scope">
-						{{scope.row.is_gift == 1 ? "是" : "否"}}
-					</template>
-				</el-table-column>
+		<list-table v-if="displayType == 'gp' && displayModel.length != 0" :model="displayModel" :data="displayData"></list-table>
+		<!-- 这里是展示模型不是编辑模型，数据结构上有一些不同之处，方便起见就做成文本展示了。 -->
+		<list-text v-if="displayType == 'fm' && displayModel.length != 0" :model="displayModel" :data="displayData"></list-text>
 
-				<el-table-column v-else-if="item.code == 'name'" :prop="item.code" :label="item.name" width="250"></el-table-column>
 
-				<el-table-column v-else-if="item.code == 'sync_switch'"  :prop="item.code" :label="item.name"width="100">
-					<template scope="scope">
-						<el-switch on-color="#13ce66" v-model="scope.row.sync_switch" off-color="#ff4949"></el-switch>
-					</template>
-				</el-table-column>
 
-				<el-table-column v-else :prop="item.code" :label="item.name" width="100"></el-table-column>
-			</template>
-		</el-table>
+		
+
+	
 
 		
 
@@ -49,15 +38,24 @@
 
 <script>
 
+	// 引入这个要一直存在的List-table组件
+	import ListTable from './List-table.vue'
+	import ListText from './List-text.vue'
 	import {mapState} from 'vuex'
 	import {mapGetters} from 'vuex'
 
   export default {
     data() {
       return {
+      	displayType: '',   //gp == table; fm == form;
         displayModel:[],
-        displayList: []
+        displayData: []
        }
+    },
+    // 导出ListTable组件，定义为标签<list-table></list-table>,写在上边的template中。
+    components: { 
+    	'list-table': ListTable,
+    	'list-text': ListText,
     },
     computed: {
     	...mapState({
@@ -70,13 +68,27 @@
     	getListData(code){
     		/* 根据key取相应的model */
     		for (var i = this.listModel.facets.length - 1; i >= 0; i--) {
-    			if (this.listModel.facets[i].code == code) {
-    				let array = this.listModel.facets[i].model.main.fields.filter(function(obj){
-			  		return obj.listpos > 0
-			  	});;
-			  	array.sort(compare("listpos"));
-				this.displayModel = array;
-    				break;
+    			let facet = this.listModel.facets[i];
+    			
+    			if (facet.code == code) {
+    				//取得该facet的渲染类型type，若没有type属性则用默认类型；
+    				this.displayType = facet.type || this.listModel.type;
+    				//通过渲染类型，整理相应的数据；
+    				if (this.displayType == 'gp') {
+    					let array = facet.model.main.fields.filter(function(obj){
+				  			return obj.listpos > 0
+				  		});;
+					  	array.sort(compare("listpos"));
+						this.displayModel = array;
+	    				break;
+    				}else if (this.displayType == 'fm') {
+    					let array = facet.model.main.fields.filter(function(obj){
+				  			return obj.cardpos > 0
+				  		});;
+					  	array.sort(compare("cardpos"));
+						this.displayModel = array;
+	    				break;
+    				}
     			}
     		}
     		/* 根据key取相应的data,用vue-resource */
@@ -90,10 +102,11 @@
 	    		this.$store.dispatch('addListType', data);
 	    		
 	    		let list = this.$store.state.list[code + '_data'].data.data
+
 	    		list.map(function(obj){
-				obj.sync_switch = Boolean(obj.sync_switch);
-			});
-	    		this.displayList = list;
+					obj.sync_switch = Boolean(obj.sync_switch);
+				});
+	    		this.displayData = list;
 	  		}, response => {
 	    		// error callback
 	    		alert('get json error !');

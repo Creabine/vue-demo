@@ -19,8 +19,7 @@ Vue.use(Vuex);
 const state = {
 	formData : {
 		data: formData.data.data,
-		model: formData.data.model,
-		//status: formData.status,
+		model: formData.data.model
 	},
 	list : {
 		listModel:listModel
@@ -31,18 +30,24 @@ const state = {
 const getters = {
 	/* formData Getters */
 	formModel : state => {
-		let array = state.formData.model.main.fields.filter(function(obj){
+		let fields = state.formData.model.main.fields.filter(function(obj){
 	  		return obj.cardpos > 0
 	  	});
-		array.map(function(obj){
+		fields.map(function(obj){
 			if (obj.type == 'stat') {
 				obj.rangeset = obj.rangeset.split('@');
 			}
 		});
-	  	array.sort(compare("cardpos"));
-		return array
+	  	fields.sort(compare("cardpos"));
+	  	let fieldset = state.formData.model.main.fieldset.sort(compare("pos"));
+	  	let model = {
+	  		fields,
+	  		fieldset
+	  	}
+		return model
 	},
-      rules : state => {
+
+    rules : state => {
 	  	let rules = {};
 	  	//cardpos == 0 的数据应该是不显示,也就没有校验规则。
 	  	let array = state.formData.model.main.fields.filter(function(obj){
@@ -60,7 +65,7 @@ const getters = {
   			}
 		}
 	  	return rules
-	 },
+	},
 	 slaves : state => {
 	 	let array =  state.formData.model.slaves;
 	 	array.map(function(obj){

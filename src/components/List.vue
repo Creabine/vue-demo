@@ -18,12 +18,12 @@
 			</el-input>
 		</div>
 
+		<!-- 下边的table组件化。然后根据facets[i].type 来判断渲染类型，若没有type就用facets的默认type。 -->
+		<!-- 然后根据不同的type来返回不同的子组件，来进行渲染。复制一个facet，渲染出一个 form-->
 		<el-table v-show="displayModel.length != 0" :data="displayList" border stripe style="width:100%;">
-
 			<el-table-column type="selection" width="50"></el-table-column>
 
 			<template v-for="item in displayModel" >
-
 				<el-table-column v-if="item.code == 'is_gift'" :prop="item.code" :label="item.name" width="60">
 					<template scope="scope">
 						{{scope.row.is_gift == 1 ? "是" : "否"}}
@@ -35,15 +35,14 @@
 				<el-table-column v-else-if="item.code == 'sync_switch'"  :prop="item.code" :label="item.name"width="100">
 					<template scope="scope">
 						<el-switch on-color="#13ce66" v-model="scope.row.sync_switch" off-color="#ff4949"></el-switch>
-						<!-- <input type="checkbox" v-model="scope.row.sync_switch"> -->
 					</template>
 				</el-table-column>
 
 				<el-table-column v-else :prop="item.code" :label="item.name" width="100"></el-table-column>
-
 			</template>
-
 		</el-table>
+
+		
 
 	</div>
 </template>

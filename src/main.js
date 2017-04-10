@@ -11,6 +11,8 @@ import store from './store'
 import Home from './components/Home'
 import Form from './components/Form'
 import List from './components/List'
+import ListTable from './components/List-table'
+import ListText from './components/List-text'
 import Test from './components/Test'
 //关闭生产模式下给出的提示
 Vue.config.productionTip = false
@@ -27,7 +29,14 @@ const routes = [{
     component : Form
 },{
     path : '/list',
-    component : List
+    component : List,
+    children: [{
+      path : '/list/gp',
+      component : ListTable
+    },{
+      path : '/list/fm',
+      component : ListText
+    }]
 },{
     path : '/test',
     component : Test

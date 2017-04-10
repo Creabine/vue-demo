@@ -1,10 +1,9 @@
 <template>
-	<div class="jumbotron">
-		<h1>表单</h1>
-
+	<div class="buttons">
 		<!-- Form -->
-		<el-button type="primary" @click="getList()">获取并编辑数据</el-button>
-		<el-dialog title="数据编辑表单" v-model="dialogFormVisible"  size="large">
+		<el-button type="warning" @click="editItem()">编辑</el-button>
+		<el-button type="danger" @click="deleteItems()">删除</el-button>
+		<el-dialog title="编辑" v-model="dialogFormVisible"  size="large">
 			<el-row>
 				<el-form :model="formData" :rules="rules" ref="formData" label-position="top" label-width="120px">
 					<!-- top -->
@@ -18,8 +17,6 @@
 							<form-item :field="item" :formData="formData"></form-item>
 						</el-col>
 					</fieldset>
-
-
 					<!-- 子表渲染 -->
 					<template v-for="list in slaves">
 						<el-row type="flex" justify="center">
@@ -42,17 +39,12 @@
 					</el-col>
 				</el-form>
 			</el-row>
-
-			
-
 			<!-- 提交按钮 -->
 			<el-row type="flex" justify="center">
 					<el-button @click="dialogFormVisible = false">取 消</el-button>
 					<el-button type="primary" @click="submitForm('formData')">提 交</el-button>
 			</el-row>
-
 		</el-dialog>
-		
 	</div>
 </template>
 
@@ -72,7 +64,8 @@ export default {
     },
 	computed : {
 		...mapState({
-			formData: state => state.formData.data
+			formData: state => state.formData.data,
+			listTableSelect: state => state.list.listTableSelect
 		}),
 		...mapGetters(['formModel','rules','slaves'])
 	},
@@ -94,6 +87,31 @@ export default {
 					return false;
 				}
 			});
+		},
+		editItem(){
+			if (this.listTableSelect.length != 1) {
+				alert('必须且只能选择1条数据');
+				return
+			}
+			let obj = this.listTableSelect[0];
+			//将obj作为参数传到后端
+			// console.log('要编辑的项目对象:');
+			// console.log(obj);
+			//后台返回新的data和model然后显示编辑面板
+			this.getList();
+		},
+		deleteItems(){
+			if (this.listTableSelect.length == 0) {
+				alert('没有选中数据');
+				return
+			}
+			let array = this.listTableSelect.map(function(obj){
+				return obj.id;
+			})
+			//将array作为参数发送给后台，执行删除
+			console.log('要删除的项目id数组:');
+			console.log(array);
+			//后台删除后返回新的数据，然后更新vuex中的数据
 		}
 	},
 }
@@ -103,4 +121,5 @@ export default {
 	p{margin: 20px 0;}
 	.el-form fieldset{margin: 20px 0 0 0;border:3px solid #20A0FF;font-size: 20px;padding: 20px 10px;}
 	.table{margin: 0 0 20px 0;}
+	.buttons{margin: 0 0 20px 0;}
 </style>

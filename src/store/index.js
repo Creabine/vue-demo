@@ -22,7 +22,8 @@ const state = {
 		model: formData.data.model
 	},
 	list : {
-		listModel:listModel
+		listModel:listModel,
+		listSelected:[]
 	}
 }
 
@@ -33,15 +34,19 @@ const getters = {
 		let fields = state.formData.model.main.fields.filter(function(obj){
 	  		return obj.cardpos > 0
 	  	});
+	  	let fieldSetStr = [];
 		fields.map(function(obj){
 			if (obj.type == 'stat') {
 				obj.rangeset = obj.rangeset.split('@');
 			}
+			fieldSetStr.push(obj.fieldset);
 		});
 	  	fields.sort(compare("cardpos"));
+
 	  	let fieldset = state.formData.model.main.fieldset.sort(compare("pos"));
 	  	let model = {
 	  		fields,
+	  		fieldSetStr,
 	  		fieldset
 	  	}
 		return model

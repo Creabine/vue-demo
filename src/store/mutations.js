@@ -29,5 +29,8 @@ export default {
 	[types.ADD_LIST_DATA](state,obj){
 		//console.log(obj);
 		state.list[obj.code + '_data'] = obj
+	},
+	[types.CHANGE_LIST_SELECTED](state,obj){
+		state.list.listTableSelect = obj
 	}
 }

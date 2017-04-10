@@ -35,5 +35,8 @@ export default {
 	},
 	addListType({ commit },data) {
 		commit(types.ADD_LIST_DATA,data)
+	},
+	changeListSelected({ commit },data) {
+		commit(types.CHANGE_LIST_SELECTED,data)
 	}
 }

@@ -13,3 +13,4 @@
 //提交
 export const SUBMIT = 'SUBMIT'
 export const ADD_LIST_DATA = 'ADD_LIST_DATA'
+export const CHANGE_LIST_SELECTED = 'CHANGE_LIST_SELECTED'

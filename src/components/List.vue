@@ -10,9 +10,12 @@
 				</el-badge>
 			</el-col> -->
 			<el-col :span="12" >
-				<el-tabs type="card" v-model="displayType" @tab-click="hehe">
-					<el-tab-pane :label="list.name" :class="list.code" v-for="(list,index) in listModel.facets" :key="list.code" :name="String(index)"></el-tab-pane>
-				</el-tabs>
+				<!-- <el-tabs type="card" v-model="displayType" @tab-click="hehe">
+					<el-tab-pane :ref="list.code" :label="list.name" :class="list.code" v-for="(list,index) in listModel.facets" :key="list.code" :name="String(index)"></el-tab-pane>
+				</el-tabs> -->
+				<el-menu mode="horizontal"  class="el-menu-demo" model="displayType" @select="getListData">
+					<el-menu-item v-for="(list,index) in listModel.facets" :key="list.code" :index="list.code">{{list.name}}</el-menu-item>
+				</el-menu>
 			</el-col>
 		</el-row>
 		 
@@ -75,9 +78,6 @@
     	//...mapGetters(['list1Model','list2Model'])
     },
     methods : {
-    	hehe(tag,event){
-    		console.log(event.target);
-    	},
     	getListData(code){
     		//console.log(tab);
     		/* 根据key取相应的model */

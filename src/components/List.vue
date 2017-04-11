@@ -3,45 +3,28 @@
 		<h1>列表</h1>
 		<p>相关数据</p>
 
+		
+
 		<el-row :gutter="20">
-			<!-- <el-col :span="3" v-for="list in listModel.facets" :key="list.code">
-				<el-badge value="10" class="item">
-					<el-button type="primary" @click="getListData(list.code)">{{list.name}}</el-button>
-				</el-badge>
-			</el-col> -->
-			<el-col :span="12" >
-				<!-- <el-tabs type="card" v-model="displayType" @tab-click="hehe">
-					<el-tab-pane :ref="list.code" :label="list.name" :class="list.code" v-for="(list,index) in listModel.facets" :key="list.code" :name="String(index)"></el-tab-pane>
-				</el-tabs> -->
+			<el-col>
 				<el-menu mode="horizontal"  class="el-menu-demo" model="displayType" @select="getListData">
 					<el-menu-item v-for="(list,index) in listModel.facets" :key="list.code" :index="list.code">{{list.name}}</el-menu-item>
+					<!-- <el-menu-item :index="list.code">{{list.name}}</el-menu-item> -->
 				</el-menu>
 			</el-col>
 		</el-row>
 		 
-		<div style="margin: 15px 0;">
-			<el-input placeholder="关键字..." >
-				<i class="el-icon-search" slot="prepend"></i>
-				<el-button slot="append">搜索</el-button>
-			</el-input>
-		</div>
-
+		<el-input style="margin: 15px 0;" placeholder="关键字..." >
+			<i class="el-icon-search" slot="prepend"></i>
+			<el-button slot="append">搜索</el-button>
+		</el-input>
+		
+		<!-- 编辑模块 -->
 		<list-form></list-form>
 
 		<!-- 下边的table组件化。然后根据facets[i].type 来判断渲染类型，若没有type就用facets的默认type。 -->
 		<!-- 然后根据不同的type来返回不同的子组件，来进行渲染。复制一个facet，渲染出一个 text-->
-
-		<!-- <list-table v-if="displayType == 'gp' && displayModel.length != 0" :model="displayModel" :data="displayData"></list-table> -->
-		<!-- 这里是展示模型不是编辑模型，数据结构上有一些不同之处，方便起见就做成文本展示了。 -->
-		<!-- <list-text v-if="displayType == 'fm' && displayModel.length != 0" :model="displayModel" :data="displayData"></list-text> -->
-
 		<router-view v-if="displayModel.length != 0"  :model="displayModel" :data="displayData" :page="pageData"></router-view>
-
-		
-
-	
-
-		
 
 	</div>
 </template>
@@ -54,14 +37,17 @@
 	import ListForm from './List-form.vue'
 	import {mapState} from 'vuex'
 	import {mapGetters} from 'vuex'
+	//data3/model3
+	//import data3 from '../../static/data3.json'
+	//import model3 from '../../static/model3.json'
 
   export default {
     data() {
       return {
       	displayType: '',   //gp == table; fm == text;
-            displayModel:[],
-      	displayData: [],
-      	pageData:{}
+           	displayModel:[],
+	      	displayData: [],
+	      	pageData:{}
        }
     },
     // 导出ListTable组件，定义为标签<list-table></list-table>,写在上边的template中。
@@ -79,7 +65,8 @@
     },
     methods : {
     	getListData(code){
-    		//console.log(tab);
+    		//this.displayData = [];
+    		console.log(code);
     		/* 根据key取相应的model */
     		for (var i = this.listModel.facets.length - 1; i >= 0; i--) {
     			let facet = this.listModel.facets[i];
@@ -101,6 +88,13 @@
 				  	array.sort(compare("cardpos"));
 					this.displayModel = array;
 	    				break;
+    				}else{
+    					let array = facet.model.main.fields.filter(function(obj){
+			  			return obj.listpos > 0
+			  		});;
+				  	array.sort(compare("listpos"));
+					this.displayModel = array;
+	    				break;
     				}
     			}
     		}
@@ -110,6 +104,7 @@
     		this.$http.get(url).then(response => {
 	    		// get body data
 	    		let data = response.body;
+	    		//console.log(data);
 	    		data.code = code;
 	    		this.pageData = data.data;
 	    		//先放入vuex，再取出来处理使用
@@ -119,12 +114,14 @@
 
 	    		list.map(function(obj){
 					obj.sync_switch = Boolean(obj.sync_switch);
-				});
+			});
 	    		this.displayData = list;
 	    		
 	  		}, response => {
 	    		// error callback
 	    		alert('get json error !');
+	    		
+
   		});
     		/* 生成相应的path并进行路由跳转 */
 		const path = '/list/' + this.displayType;

@@ -1117,7 +1117,7 @@
 				"type": "so"
 			},
 			"scripts": "static/js/erp/component/list-panel/lp-so.js",
-			"type": "lp",
+			"type": "gp",
 			"is_def": 0,
 			"status": 5
 		},

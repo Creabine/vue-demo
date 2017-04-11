@@ -12,6 +12,7 @@ import actions from './actions'
 import formData from '../../static/data.json'
 import listModel from '../../static/list_model.json'
 
+
 Vue.use(Vuex);
 
 
@@ -24,7 +25,7 @@ const state = {
 	list : {
 		listModel:listModel,
 		listSelected:[]
-	}
+	},
 }
 
 

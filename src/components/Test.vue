@@ -1,26 +1,18 @@
 <template>
 	<div class="jumbotron">
-		<h1>表单</h1>
-		<!-- <p>{{status == 1 ? "得到数据" : "无数据"}}</p> -->
-
-		<!-- Form -->
-		<el-button type="primary" @click="getList()">获取并编辑数据</el-button>
-		<el-dialog title="数据编辑表单" v-model="dialogFormVisible"  size="small">
-			<el-form :model="testFrom" :rules="rules" ref="testFrom" :inline="true" label-width="120px">
-
-				<el-form-item v-for="item in testFormModel" :label="item.name" :key="item.code" :prop="item.code">
-					<el-input v-model="testFrom[item.code]"></el-input>
-					
-				</el-form-item>
-				<!-- 提交按钮 -->
-				<el-form-item>
-					<el-button @click="dialogFormVisible = false">取 消</el-button>
-					<el-button type="primary" @click="submitForm('testFrom')">提 交</el-button>
-				</el-form-item>
-
-			</el-form>
-		</el-dialog>
+		<h1>计算器</h1>
 		
+		
+		<el-row :gutter="20">
+			<el-col :span="6"><el-input v-model="num1" placeholder="num1"></el-input></el-col>
+			<el-col :span="6"><el-input v-model="num2" placeholder="num2"></el-input></el-col>
+			<el-col :span="2"><el-button type="primary" @click="add">加</el-button></el-col>
+			<el-col :span="2"><el-button type="primary" @click="minus">减</el-button></el-col>
+			<el-col :span="2"><el-button type="primary" @click="multiply">乘</el-button></el-col>
+			<el-col :span="2"><el-button type="primary" @click="divide">除</el-button></el-col>
+		</el-row>
+
+		<p> Result = {{ result }}</p>
 	</div>
 </template>
 
@@ -31,46 +23,73 @@
 	export default {
 		data(){
 			return {
-				//dialogTableVisible: false,
-				dialogFormVisible: false,
-				testFrom:{
-					price: "123",
-					buyer:'陈磊'
-				},
-				testFormModel:[
-					{
-						name: '价格',
-						code: 'price'
-					},{
-						name: '买家',
-						code:'buyer'
-					}
-				],
-				rules:{
-					price:{ required:true,message:"请输入价格",trigger:"blur" },
-					buyer:{ required:true,message:"请输入买家",trigger:"blur"}
-				}
+				num1: "0.1",
+				num2: "0.2",
+				result: ""
+
 			}
 		},
 		computed : {
 			
 		},
 		methods : {
-			getList() {
-				/* 从json文件取得数据放入vuex  */
-				this.dialogFormVisible = true;
+			add(){  //+
+				//判断最大小数位数
+				let length1 = this.num1.split(".")[1].length;
+				let length2 = this.num2.split(".")[1].length;
+				let length = length1 >= length2 ? length1 : length2;
+				//console.log(length);
+				//化为整数计算再变回小数
+				let helpNum = Math.pow(10,length);
+				//console.log(helpNum);
+				let num1 = Number(this.num1) * helpNum;
+				let num2 = Number(this.num2) * helpNum;
+				let result = (num1 + num2)/helpNum;
+				this.result = result;		
 			},
-			submitForm(formName) {
-		 		this.$refs[formName].validate((valid) => {
-		        	if (valid) {
-		        		//alert('submit!');
-		        		this.dialogFormVisible = false;
-		        	} else {
-		        		console.log('error submit!!');
-		        		return false;
-		        	}
-		        });
+			minus(){  //-
+				//判断最大小数位数
+				let length1 = this.num1.split(".")[1].length;
+				let length2 = this.num2.split(".")[1].length;
+				let length = length1 >= length2 ? length1 : length2;
+				//console.log(length);
+				//化为整数计算再变回小数
+				let helpNum = Math.pow(10,length);
+				//console.log(helpNum);
+				let num1 = Number(this.num1) * helpNum;
+				let num2 = Number(this.num2) * helpNum;
+				let result = (num1 - num2)/helpNum;
+				this.result = result;		
 			},
+			multiply(){  //*
+				//判断最大小数位数
+				let length1 = this.num1.split(".")[1].length;
+				let length2 = this.num2.split(".")[1].length;
+				//let length = length1 >= length2 ? length1 : length2;
+				//console.log(length);
+				//化为整数计算再变回小数
+				let helpNum1 = Math.pow(10,length1);
+				let helpNum2 = Math.pow(10,length2);
+				//console.log(helpNum);
+				let num1 = Number(this.num1) * helpNum1;
+				let num2 = Number(this.num2) * helpNum2;
+				let result = (num1 * num2)/(helpNum1 * helpNum2);
+				this.result = result;	
+			},
+			divide(){  //  /
+				//判断最大小数位数
+				let length1 = this.num1.split(".")[1].length;
+				let length2 = this.num2.split(".")[1].length;
+				//let length = length1 >= length2 ? length1 : length2;
+				//console.log(length);
+				//化为整数计算再变回小数
+				let helpNum1 = Math.pow(10,length1);
+				let helpNum2 = Math.pow(10,length2);
+				let num1 = Number(this.num1) * helpNum1;
+				let num2 = Number(this.num2) * helpNum2;
+				let result = (num1 / num2);
+				this.result = result;	
+			}
 		},
 	}
 	</script>

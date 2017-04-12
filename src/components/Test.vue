@@ -2,7 +2,6 @@
 	<div class="jumbotron">
 		<h1>计算器</h1>
 		
-		
 		<el-row :gutter="20">
 			<el-col :span="6"><el-input v-model="num1" placeholder="num1"></el-input></el-col>
 			<el-col :span="6"><el-input v-model="num2" placeholder="num2"></el-input></el-col>
@@ -80,13 +79,14 @@
 				//判断最大小数位数
 				let length1 = this.num1.split(".")[1].length;
 				let length2 = this.num2.split(".")[1].length;
-				//let length = length1 >= length2 ? length1 : length2;
+				let length = length1 >= length2 ? length1 : length2;
 				//console.log(length);
 				//化为整数计算再变回小数
 				let helpNum1 = Math.pow(10,length1);
 				let helpNum2 = Math.pow(10,length2);
-				let num1 = Number(this.num1) * helpNum1;
-				let num2 = Number(this.num2) * helpNum2;
+				let num1 = Number(this.num1) * length;
+				let num2 = Number(this.num2) * length;
+				console.log(num1,num2);
 				let result = (num1 / num2);
 				this.result = result;	
 			}

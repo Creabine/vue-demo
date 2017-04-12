@@ -1,8 +1,8 @@
 <template>
 	<div class="buttons">
 		<!-- Form -->
-		<el-button type="warning" @click="editItem()">编辑</el-button>
-		<el-button type="danger" @click="deleteItems()">删除</el-button>
+		<el-button type="warning" :disabled="listTableSelect.length != 1" @click="editItem()">编辑</el-button>
+		<el-button type="danger" :disabled="listTableSelect.length == 0" @click="deleteItems()">删除</el-button>
 		<el-dialog title="编辑" v-model="dialogFormVisible"  size="large">
 			<el-row>
 				<el-form :model="formData" :rules="rules" ref="formData" label-position="top" label-width="120px">

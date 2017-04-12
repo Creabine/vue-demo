@@ -1,7 +1,7 @@
 <template>
 	<div class="jumbotron">
 		<h1>列表</h1>
-		<p>相关数据</p>
+		<p @click="displayData = []">相关数据</p>
 
 		
 
@@ -65,8 +65,8 @@
     },
     methods : {
     	getListData(code){
-    		//this.displayData = [];
-    		console.log(code);
+
+    		//console.log(code);
     		/* 根据key取相应的model */
     		for (var i = this.listModel.facets.length - 1; i >= 0; i--) {
     			let facet = this.listModel.facets[i];

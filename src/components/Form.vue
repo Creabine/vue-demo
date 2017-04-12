@@ -43,8 +43,6 @@
 				</el-form>
 			</el-row>
 
-			
-
 			<!-- 提交按钮 -->
 			<el-row type="flex" justify="center">
 					<el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -90,7 +88,7 @@ export default {
 					this.$store.dispatch('submit', this.formData);
 					this.dialogFormVisible = false;
 				} else {
-					console.log('error submit!!');
+					console.log(this.$refs[formName]);
 					return false;
 				}
 			});

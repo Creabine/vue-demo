@@ -1,30 +1,15 @@
 <template>
 	<div>
-		<el-table :model="model" :data="data" @selection-change="handleSelectionChange" border stripe max-height="500">
+		<el-table :model="model" :data="data" @selection-change="handleSelectionChange" border stripe max-height="500" :fit="true">
 			<el-table-column type="selection" align="center" fixed="left" width="50"></el-table-column>
 
-			<template v-for="item in model" >
-				<el-table-column v-if="item.code == 'is_gift'" :prop="item.code" :label="item.name">
-					<template scope="scope">
-						{{scope.row.is_gift == 1 ? "是" : "否"}}
-					</template>
-				</el-table-column>
-				<!-- 名字留的宽一点 -->
-				<el-table-column v-else-if="item.code == 'name'" :prop="item.code" :label="item.name" min-width="200"></el-table-column>
-
-				<el-table-column v-else-if="item.code == 'sync_switch'"  :prop="item.code" :label="item.name" width="100">
-					<template scope="scope">
-						<el-switch on-color="#13ce66" v-model="scope.row.sync_switch" off-color="#ff4949"></el-switch>
-					</template>
-				</el-table-column>
-
-				<!-- 插入html -->
-				<el-table-column v-else :prop="item.code" :label="item.name" min-width="300">
-					<template scope="scope">
-						<span v-html="scope.row[item.code]"></span>
-					</template>
-				</el-table-column>
-			</template>
+			<!-- 插入html   :show-overflow-tooltip="true"-->
+			<el-table-column :label="item.name" v-for="item in model">
+				<template scope="scope">
+					<span v-html="scope.row[item.code]"></span>
+				</template>
+			</el-table-column>
+			
 		</el-table>
 
 		<el-row type="flex" justify="center">
@@ -34,8 +19,6 @@
 			      :total="page.totalCount">
 		    	</el-pagination>
 		</el-row>
-
-		
 	</div>
 </template>
 

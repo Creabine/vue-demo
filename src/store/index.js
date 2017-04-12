@@ -24,7 +24,7 @@ const state = {
 	},
 	list : {
 		listModel:listModel,
-		listSelected:[]
+		listTableSelect:[]
 	},
 }
 

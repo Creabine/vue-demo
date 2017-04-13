@@ -5983,7 +5983,7 @@
 			"code": "so_finish",
 			"serial": 5,
 			"bill_code": "bill_so_finish",
-			"name": "已收货",
+			"name": "块状渲染",
 			"lm_ts": 1491556369548,
 			"model": {
 				"code": "bill_so_finish",
@@ -6823,7 +6823,7 @@
 				],
 				"status": 5
 			},
-			"type": "gp",
+			"type": "db",
 			"is_def": 0,
 			"status": 5
 		}

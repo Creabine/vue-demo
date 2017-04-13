@@ -13,6 +13,7 @@ import Form from './components/Form'
 import List from './components/List'
 import ListTable from './components/List-table'
 import ListText from './components/List-text'
+import ListBlock from './components/List-block'
 import Test from './components/Test'
 //关闭生产模式下给出的提示
 Vue.config.productionTip = false
@@ -36,6 +37,9 @@ const routes = [{
     },{
       path : '/list/fm',
       component : ListText
+    },{
+      path : '/list/db',
+      component : ListBlock
     }]
 },{
     path : '/test',

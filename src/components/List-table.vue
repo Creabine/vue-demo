@@ -4,7 +4,7 @@
 			<el-table-column type="selection" align="center" fixed="left" width="50"></el-table-column>
 
 			<!-- 插入html   :show-overflow-tooltip="true"-->
-			<el-table-column :label="item.name" v-for="item in model">
+			<el-table-column :label="item.name" v-for="item in model" :key="item.id">
 				<template scope="scope">
 					<span v-html="scope.row[item.code]"></span>
 				</template>

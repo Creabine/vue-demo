@@ -1,7 +1,7 @@
 <template>
 	<div class="jumbotron">
 		<h1>列表</h1>
-		<p @click="displayData = []">相关数据</p>
+		<p>相关数据</p>
 
 		
 
@@ -88,7 +88,7 @@
 				  	array.sort(compare("cardpos"));
 					this.displayModel = array;
 	    				break;
-    				}else{
+    				}else{   //  db
     					let array = facet.model.main.fields.filter(function(obj){
 			  			return obj.listpos > 0
 			  		});;

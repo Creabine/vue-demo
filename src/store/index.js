@@ -11,7 +11,8 @@ import actions from './actions'
 //json数据
 import formData from '../../static/data.json'
 import listModel from '../../static/list_model.json'
-
+import blockData from '../../static/so_tbc.json'
+import blockModel from '../../static/list_model.json'
 
 Vue.use(Vuex);
 
@@ -26,6 +27,10 @@ const state = {
 		listModel:listModel,
 		listTableSelect:[]
 	},
+	block : {
+		blockData:blockData,
+		blockModel:blockModel
+	}
 }
 
 
@@ -53,7 +58,7 @@ const getters = {
 		return model
 	},
 
-    rules : state => {
+    	rules : state => {
 	  	let rules = {};
 	  	//cardpos == 0 的数据应该是不显示,也就没有校验规则。
 	  	let array = state.formData.model.main.fields.filter(function(obj){
@@ -83,6 +88,9 @@ const getters = {
 	 }
 	
 	/* list Getters */
+	
+
+	/* block Gerrer */
 	
 }
 

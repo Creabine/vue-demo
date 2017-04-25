@@ -85,13 +85,15 @@ const getters = {
 			});
 		});
 		return array;
-	 }
+	 },
 	
 	/* list Getters */
 	
 
 	/* block Gerrer */
-	
+	blockModel : state => {
+		let array = state.block.blockModel
+	}
 }
 
 //默认导出： 初始化好的Vuex.Store()对象

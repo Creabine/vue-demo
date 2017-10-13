@@ -3,7 +3,7 @@
 		<h1>列表</h1>
 		<p>相关数据</p>
 
-		
+
 
 		<el-row :gutter="20">
 			<el-col>
@@ -13,12 +13,12 @@
 				</el-menu>
 			</el-col>
 		</el-row>
-		 
+
 		<el-input style="margin: 15px 0;" placeholder="关键字..." >
 			<i class="el-icon-search" slot="prepend"></i>
 			<el-button slot="append">搜索</el-button>
 		</el-input>
-		
+
 		<!-- 编辑模块 -->
 		<list-form></list-form>
 
@@ -51,7 +51,7 @@
        }
     },
     // 导出ListTable组件，定义为标签<list-table></list-table>,写在上边的template中。
-    components: { 
+    components: {
     	'list-table': ListTable,
     	'list-text': ListText,
     	'list-form':ListForm
@@ -59,9 +59,9 @@
     computed: {
     	...mapState({
         	listModel: state => state.list.listModel
-	}),
-	//...mapGetters(['list1Data','list2Data']),
-    	//...mapGetters(['list1Model','list2Model'])
+			}),
+			//...mapGetters(['list1Data','list2Data']),
+		  //...mapGetters(['list1Model','list2Model'])
     },
     methods : {
     	getListData(code){
@@ -109,18 +109,18 @@
 	    		this.pageData = data.data;
 	    		//先放入vuex，再取出来处理使用
 	    		this.$store.dispatch('addListType', data);
-	    		
+
 	    		let list = this.$store.state.list[code + '_data'].data.data
 
 	    		list.map(function(obj){
 					obj.sync_switch = Boolean(obj.sync_switch);
 			});
 	    		this.displayData = list;
-	    		
+
 	  		}, response => {
 	    		// error callback
 	    		alert('get json error !');
-	    		
+
 
   		});
     		/* 生成相应的path并进行路由跳转 */
@@ -132,11 +132,11 @@
 
 /* 公用函数 */
 function compare(propertyName){
-	return function (object1, object2) { 
-		var value1 = object1[propertyName]; 
-		var value2 = object2[propertyName]; 
+	return function (object1, object2) {
+		var value1 = object1[propertyName];
+		var value2 = object2[propertyName];
 		return value1 - value2;
-	};  
+	};
 }
 </script>
 

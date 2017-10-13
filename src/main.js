@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import router from './router'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource';
 import ElementUI from 'element-ui'
@@ -22,33 +23,6 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.use(ElementUI)
 
-const routes = [{
-  	path : '/',
-  	component : Home
-},{
-    path : '/form',
-    component : Form
-},{
-    path : '/list',
-    component : List,
-    children: [{
-      path : '/list/gp',
-      component : ListTable
-    },{
-      path : '/list/fm',
-      component : ListText
-    },{
-      path : '/list/db',
-      component : ListBlock
-    }]
-},{
-    path : '/test',
-    component : Test
-}];
-
-const router = new VueRouter({
-	routes
-});
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
